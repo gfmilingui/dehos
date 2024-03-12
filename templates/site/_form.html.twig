@@ -1,0 +1,21 @@
+{{ form_start(form) }}
+    <div class="row">
+        {{ form_row(form.client) }}
+        {{ form_row(form.nom) }}
+        {{ form_row(form.nombre_bennes) }}
+        {{ form_row(form.quartier) }}
+        {{ form_row(form.adresse) }}
+        {{ form_row(form.ville) }}
+        {{ form_row(form.code_postal) }}
+        {{ form_row(form.pays) }}
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-success btn-sm">
+                <i class="bi bi-save-fill"></i>
+                {{ button_label|default('Sauvegarder') }}
+            </button>
+        </div>
+    </div>
+{{ form_end(form) }}

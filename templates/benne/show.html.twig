@@ -1,0 +1,121 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consultation de la Benne{% endblock %}
+
+{% block body %}
+    <div class="container-fluid title-area" style="margin-bottom: 10px;">
+        <h2 class="display-1 text-center">Consultation de la Benne</h2>
+    </div>
+    <div class="container-fluid content-area" style="margin-bottom: 30px;">
+        <div class="for-flashes">
+            {% for message in app.flashes('notice-bennes') %}
+                <div class="bg-warning flash-notice mb-3 text-bold text-dark">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('success-bennes') %}
+                <div class="bg-success flash-success mb-3 text-bold text-white">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-sm mb-3">
+                    <tbody>
+                        <tr>
+                            <th class="table-label">#</th>
+                            <td>{{ benne.id }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Créée le</th>
+                            <td>{{ benne.createdAt ? benne.createdAt|date('d-m-Y H:i:s') : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Modifiée le</th>
+                            <td>{{ benne.updatedAt ? benne.updatedAt|date('d-m-Y H:i:s') : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Label</th>
+                            <td>{{ benne.label }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Numéro série</th>
+                            <td>
+                                {{ benne.numeroSerie }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Capacité</th>
+                            <td>
+                                {{ benne.capacite }} {{ benne.capaciteUnite }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Etat</th>
+                            <td>
+                                {% if benne.etat == "Libre" %}
+                                    <span class="badge rounded-pill bg-success text-white">
+                                        {{ benne.etat}}
+                                    </span>
+                                {% elseif benne.etat == "En attende de validation" %}
+                                    <span class="badge rounded-pill bg-warning text-dark">
+                                        {{ benne.etat}}
+                                    </span>
+                                {% else %}
+                                    <span class="badge rounded-pill bg-info text-dark">
+                                        {{ benne.etat}}
+                                    </span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Affectée à</th>
+                            <td>
+                                {{ benne.getSite.getClient.getNom ?? '' }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Site</th>
+                            <td>
+                                {{ benne.getSite.getNom ?? '' }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Date</th>
+                            <td>
+                                {% if benne.getSite is not null and benne.dateLivraison is null %}
+                                    <span class="text-bold text-danger">
+                                        Attention : aucune date
+                                    </span>
+                                {% else %}
+                                    {{ benne.dateLivraison ? benne.dateLivraison|date('Y-m-d H:i:s') : '' }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Statut workflow</th>
+                            <td class="text-bold text-muted">
+                                {{ benne.statutWorkflow ?? '' }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="mb-3">
+                    <a href="{{ path('app_benne_edit', {'id': benne.id}) }}" class="btn btn-info btn-sm">
+                        <i class="bi bi-pencil-square" style="color: #fff;"></i>
+                        Modifier
+                    </a>
+                    <a href="#" class="btn btn-secondary btn-sm">
+                        <i class="bi bi-printer-fill"></i>
+                        Imprimer
+                    </a>
+                    <a href="{{ path('app_benne_index') }}" class="btn btn-secondary btn-sm">
+                        <i class="bi bi-backspace-fill"></i>
+                        Retourner à la liste
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

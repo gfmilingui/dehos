@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Affectation{% endblock %}
+
+{% block body %}
+    <div class="container-fluid title-area" style="margin-bottom: 10px;">
+        <h2 class="display-1 text-center">Affectation</h2>
+    </div>
+    <div class="container-fluid content-area table-responsive" style="margin-bottom: 30px;">
+        {% for message in app.flashes('notice-demandes-affectation') %}
+            <div class="bg-warning flash-notice mb-3 text-bold text-dark">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('success-demandes-affectation') %}
+            <div class="bg-success flash-success mb-3 text-bold text-white">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <table class="table table table-hover table-sm" id="tableIndexView">
+            <thead>
+                <tr>
+                    <th>Client</th>
+                    <th>Site</th>
+                    <th>Nombre de Bennes</th>
+                    <th>Statut</th>
+                    <th>Date (Maj)</th>
+                    <th style="text-align: center;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for demande in demandes %}
+                <tr>
+                    <td>{{ demande.getClient.nom }}</td>
+                    <td>{{ demande.getSite.nom }}</td>
+                    <td>{{ demande.nombreBennes }}</td>
+                    <td>{{ demande.statut }}</td>
+                    <td>{{ demande.updatedAt ? demande.updatedAt|date('d-m-Y') : '' }}</td>
+                    <td style="text-align: center;">
+                        {% if demande.statut == "Affecter" %}
+                            <a href="{{ path('app_benne_affectation_demande', {'id': demande.id}) }}" class="badge bg-success" style="text-decoration: none; width: 100px;">
+                                <span class="text-bold text-white">Affecter</span>
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">Aucune données trouvées</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        
+        {#
+        <a href="{{ path('app_site_new') }}" class="btn btn-info btn-sm">
+            <i class="bi bi-plus-circle" style="color: #fff;"></i>
+            <!-- <i class="bi bi-plus-circle-fill" style="font-size: 2rem; color: cornflowerblue;"></i> -->
+            Nouveau Site
+        </a>
+        #}
+        <a href="#" class="btn btn-secondary btn-sm">
+            <i class="bi bi-printer-fill"></i>
+            Imprimer
+        </a>
+    </div>
+{% endblock %}

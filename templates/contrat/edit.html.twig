@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification du contrat{% endblock %}
+
+{% block body %}
+    <div class="container-fluid title-area" style="margin-bottom: 10px;">
+        <h2 class="display-1 text-center">Modification du contrat</h2>
+    </div>
+    <div class="container-fluid content-area" style="margin-bottom: 30px;">
+        <div class="for-flashes">
+            {% for message in app.flashes('notice-contrats') %}
+                <div class="bg-warning flash-notice mb-3 text-bold text-dark">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('success-contrats') %}
+                <div class="bg-success flash-success mb-3 text-bold text-white">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <p class="text-muted text-center">Les champs avec <span>*</span> sont obligatoires !</p>
+        {{ include('contrat/_form.html.twig', {'button_label': 'Update'}) }}
+        <a href="#" class="btn btn-secondary btn-sm">
+            <i class="bi bi-printer-fill"></i>
+            Imprimer
+        </a>
+        <a href="{{ path('app_contrat_index') }}" class="btn btn-secondary btn-sm">
+            <i class="bi bi-backspace-fill"></i>
+            Retourner à la liste
+        </a>
+        <hr/>
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Sites</h3>
+                <table class="table table table-hover table-sm" id="tableIndexView">
+                    <thead>
+                        <tr>
+                            <th>Client</th>
+                            <th>Nom</th>
+                            <th>Nombre de Bennes</th>
+                            <th>Adresse</th>
+                            <th>Ville</th>
+                            <th>Pays</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for site in contrat.getSites %}
+                        <tr>
+                            <td>{{ site.getClient.nom }}</td>
+                            <td>{{ site.nom }}</td>
+                            <td>{{ site.nombreBennes }}</td>
+                            <td>{{ site.adresse }}</td>
+                            <td>{{ site.ville }}</td>
+                            <td>{{ site.pays }}</td>
+                            <td>
+                                <a href="{{ path('app_site_edit', {'id': site.id}) }}"><i class="bi bi-pencil-square" style="color: #6c757d;"></i></a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="10">Aucune données trouvées</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{#
+{% block javascripts %}
+    {{ parent() }}
+    <script src="/assets/app/js/appContrat.js"></script>
+{% endblock %}
+#}

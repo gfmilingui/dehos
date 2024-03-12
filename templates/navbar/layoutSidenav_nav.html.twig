@@ -1,0 +1,141 @@
+{% set currentPathInfo = app.request.pathInfo %}
+
+<div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+                            {# <div class="sb-sidenav-menu-heading">CLIENT</div> #}
+                            {% if is_granted('ROLE_COMMERCIAL') %}
+                            <a class="nav-link" href="#">
+                                <div class="sb-nav-link-icon"><i class="fas fa-chart-line"></i></div>
+                                Dashboard
+                            </a>
+                            {% endif %}
+                            {% if is_granted('ROLE_COMMERCIAL') %}
+                            {# <div class="sb-sidenav-menu-heading">Demandes</div> #}
+                            <a class="nav-link collapsed
+                                {% if currentPathInfo == path('app_client_categorie_index') %}active
+                                {% elseif currentPathInfo == path('app_client_categorie_new') %}active
+                                {% elseif fromController is defined and fromController == 'ClientCategorieController' %}active
+
+                                {% elseif currentPathInfo == path('app_client_index') %}active
+                                {% elseif currentPathInfo == path('app_client_new') %}active
+                                {% elseif fromController is defined and fromController == 'ClientController' %}active
+
+                                {% elseif currentPathInfo == path('app_site_index') %}active
+                                {% elseif currentPathInfo == path('app_site_new') %}active
+                                {% elseif fromController is defined and fromController == 'SiteController' %}active
+                                
+                                {% elseif currentPathInfo == path('app_contrat_index') %}active
+                                {% elseif currentPathInfo == path('app_contrat_new') %}active
+                                {% elseif fromController is defined and fromController == 'ContratController' %}active
+                                {% endif %}
+                                "
+                                href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"><i class="fas fa-bookmark"></i></div>
+                                Clients
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link 
+                                        {% if currentPathInfo == path('app_client_categorie_index') %}active
+                                        {% elseif currentPathInfo == path('app_client_categorie_new') %}active
+                                        {% elseif fromController is defined and fromController == 'ClientCategorieController' %}active
+                                        {% endif %}" 
+                                        href="{{ path('app_client_categorie_index') }}">Catégories</a>
+                                    <a class="nav-link 
+                                        {% if currentPathInfo == path('app_client_index') %}active
+                                        {% elseif currentPathInfo == path('app_client_new') %}active
+                                        {% elseif fromController is defined and fromController == 'ClientController' %}active
+                                        {% endif %}" 
+                                        href="{{ path('app_client_index') }}">Clients</a>
+                                    <a class="nav-link 
+                                        {% if currentPathInfo == path('app_site_index') %}active
+                                        {% elseif currentPathInfo == path('app_site_new') %}active
+                                        {% elseif fromController is defined and fromController == 'SiteController' %}active
+                                        {% endif %}" 
+                                        href="{{ path('app_site_index') }}">Sites</a>
+                                    <a class="nav-link 
+                                        {% if currentPathInfo == path('app_contrat_index') %}active
+                                        {% elseif currentPathInfo == path('app_contrat_new') %}active
+                                        {% elseif fromController is defined and fromController == 'ContratController' %}active
+                                        {% endif %}" 
+                                        href="{{ path('app_contrat_index') }}">Contrats</a>
+                                </nav>
+                            </div>
+                            {% endif %}
+                            {% if is_granted('ROLE_AFFECTATION') %}
+                                {# <div class="sb-sidenav-menu-heading">Stock Bennnes</div> #}
+                                <a class="nav-link 
+                                    {% if currentPathInfo == path('app_demande_index') %}active
+                                    {% elseif currentPathInfo == path('app_demande_new') %}active
+                                    {% elseif fromController is defined and fromController == 'DemandeController' %}active
+                                    {% endif %}"
+                                    href="{{ path('app_demande_index') }}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-clipboard"></i></div>
+                                    Demandes
+                                </a>
+                            {% endif %}
+                            {% if is_granted('ROLE_STOCK') %}
+                                {# <div class="sb-sidenav-menu-heading">Stock Bennnes</div> #}
+                                <a class="nav-link 
+                                    {% if currentPathInfo == path('app_benne_index') %}active
+                                    {% elseif currentPathInfo == path('app_benne_new') %}active
+                                    {% elseif fromController is defined and fromController == 'BenneController' %}active
+                                    {% endif %}"
+                                    href="{{ path('app_benne_index') }}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-cubes"></i></div>
+                                    Stock Bennnes
+                                </a>
+                            {% endif %}
+                            {% if is_granted('ROLE_AFFECTATION') %}
+                                {# <div class="sb-sidenav-menu-heading">Affectations</div> #}
+                                <a class="nav-link {% if currentPathInfo == path('app_demande_affectation') %}active{% endif %}" href="{{ path('app_demande_affectation') }}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                    Affectations
+                                </a>
+                            {% endif %}
+                            {% if is_granted('ROLE_STOCK') %}
+                                {# <div class="sb-sidenav-menu-heading">Bons de sortie</div> #}
+                                <a class="nav-link {% if currentPathInfo == path('app_bon_sortie_index') %}active{% endif %}" href="{{ path('app_bon_sortie_index') }}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-file"></i></div>
+                                    Bons de sortie
+                                </a>
+                            {% endif %}
+                            {% if is_granted('ROLE_SUIVI_RETOUR') %}
+                                {# <div class="sb-sidenav-menu-heading">Suivis Retours</div> #}
+                                <a class="nav-link {% if currentPathInfo == path('app_suivi_retour_index') %}active{% endif %}" href="{{ path('app_suivi_retour_index') }}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-dice-d6"></i></div>
+                                    Suivis Retours
+                                </a>
+                            {% endif %}
+                            {% if is_granted('ROLE_TRAITEMENT') %}
+                                {# <div class="sb-sidenav-menu-heading">Traitements</div> #}
+                                <a class="nav-link {% if currentPathInfo == path('app_traitement_index') %}active{% endif %}" href="{{ path('app_traitement_index') }}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-cogs"></i></div>
+                                    Traitements
+                                </a>
+                            {% endif %}
+                            {% if is_granted('ROLE_MANAGER') %}
+                                {# <div class="sb-sidenav-menu-heading">Stock Bennnes</div> #}
+                                <a class="nav-link 
+                                    {% if currentPathInfo == path('app_user_index') %}active
+                                    {% elseif currentPathInfo == path('app_user_new') %}active
+                                    {% elseif fromController is defined and fromController == 'UserController' %}active
+                                    {% endif %}" 
+                                    href="{{ path('app_user_index') }}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-address-card"></i></div>
+                                    Comptes
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {#
+                    <div class="sb-sidenav-footer">
+                        <div class="small">Logged in as:</div>
+                        Start Bootstrap
+                    </div>
+                    #}
+                </nav>
+            </div>

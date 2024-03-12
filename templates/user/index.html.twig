@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Comptes Utilisateur{% endblock %}
+
+{% block body %}
+    <div class="container-fluid title-area" style="margin-bottom: 10px;">
+        <h2 class="display-1 text-center">Liste des Comptes Utilisateur</h2>
+    </div>
+    <div class="container-fluid content-area table-responsive" style="margin-bottom: 30px;">
+        <div class="for-flashes">
+            {% for message in app.flashes('notice-users') %}
+                <div class="bg-warning flash-notice mb-3 text-bold text-dark">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('success-users') %}
+                <div class="bg-success flash-success mb-3 text-bold text-white">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>   
+        <table class="table table-hover table-sm" id="tableIndexView">
+            <thead>
+                <tr>
+                    <th>Créé le</th>
+                    <th>Email</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Roles</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.createdAt ? user.createdAt|date('d-m-Y') : '' }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.lastname }}</td>
+                    <td>{{ user.firstname }}</td>
+                    <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                    <td>
+                        <a href="{{ path('app_user_show', {'id': user.id}) }}" style="text-decoration: none;">
+                            <i class="bi bi-eye-fill" style="color: #6c757d;"></i>
+                        </a>
+                        <a href="{{ path('app_user_edit', {'id': user.id}) }}" style="text-decoration: none;">
+                            <i class="bi bi-pencil-square" style="color: #6c757d;"></i>
+                        </a>
+                        <a href="#" class=""><i class="bi bi-printer-fill" style="color: #6c757d;"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Aucunes données trouvées</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+            
+        <a href="{{ path('app_user_new') }}" class="btn btn-info btn-sm">
+            <i class="bi bi-plus-circle" style="color: #fff;"></i>
+            Ajouter
+        </a>
+        <a href="#" class="btn btn-secondary btn-sm">
+            <i class="bi bi-printer-fill"></i>
+            Imprimer
+        </a>
+    </div>
+{% endblock %}

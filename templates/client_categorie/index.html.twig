@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Catégories{% endblock %}
+
+{% block body %}
+    <div class="container-fluid title-area" style="margin-bottom: 10px;">
+        <h2 class="display-1 text-center">Liste des Catégories</h2>
+    </div>
+    <div class="container-fluid content-area table-responsive" style="margin-bottom: 30px;">
+        <div class="for-flashes">
+            {% for message in app.flashes('notice-client-categorie') %}
+                <div class="bg-warning flash-notice mb-3 text-bold text-dark">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('success-client-categorie') %}
+                <div class="bg-success flash-success mb-3 text-bold text-white">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <table class="table table-hover table-sm" id="tableIndexView">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Label</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for client_categorie in client_categories %}
+                <tr>
+                    <td>{{ client_categorie.nom }}</td>
+                    <td>{{ client_categorie.label }}</td>
+                    <td>{{ client_categorie.description }}</td>
+                    <td>
+                        <a href="{{ path('app_client_categorie_show', {'id': client_categorie.id}) }}"><i class="bi bi-eye-fill" style="color: #6c757d;"></i></a>
+                        <a href="{{ path('app_client_categorie_edit', {'id': client_categorie.id}) }}"><i class="bi bi-pencil-square" style="color: #6c757d;"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">Aucunes données trouvées</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ path('app_client_categorie_new') }}" class="btn btn-info btn-sm">
+            <i class="bi bi-plus-circle" style="color: #fff;"></i>
+            Ajouter
+        </a>
+        <a href="#" class="btn btn-secondary btn-sm">
+            <i class="bi bi-printer-fill"></i>
+            Imprimer
+        </a>
+    </div>
+{% endblock %}

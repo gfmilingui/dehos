@@ -1,0 +1,37 @@
+{{ form_start(form) }}
+    <div class="row">
+        <div class="mb-3 row-form col-md-4">
+            <label class="form-label">Client</label>
+            <input type="text" class="form-control form-control-sm" value="{{ suivi_retour.getBonSortie.getDemande.getSite.getClient.nom ?? '' }}" disabled>
+        </div>
+        <div class="mb-3 row-form col-md-4">
+            <label class="form-label">Site</label>
+            <input type="text" class="form-control form-control-sm" value="{{ suivi_retour.getBonSortie.getDemande.getSite.nom ?? '' }}" disabled>
+        </div>
+        <div class="mb-3 row-form col-md-4"></div>
+        <div class="mb-3 row-form col-md-4">
+            <label class="form-label">Numéro de série Benne</label>
+            <input type="text" class="form-control form-control-sm" value="{{ suivi_retour.getBenne.getNumeroSerie }}" disabled>
+        </div>
+        <div class="mb-3 row-form col-md-4">
+            <label class="form-label">Capacité Benne</label>
+            <input type="text" class="form-control form-control-sm" value="{{ suivi_retour.getBenne.getCapacite }} {{ suivi_retour.getBenne.getCapaciteUnite }}" disabled>
+        </div>
+        <div class="mb-3 row-form col-md-4">
+            <label class="form-label">Statut Workflow</label>
+            <input type="text" class="form-control form-control-sm" value="{{ suivi_retour.getBenne.getStatutWorkflow }}" disabled>
+        </div>
+        {{ form_row(form.date_retour_benne) }}
+        {{ form_row(form.pesee_client) }}
+        {{ form_row(form.pesee_agent) }}
+        {{ form_row(form.remarques) }}
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-success btn-sm">
+                <i class="bi bi-save-fill"></i>
+                {{ button_label|default('Sauvegarder') }}
+            </button>
+        </div>
+    </div>
+{{ form_end(form) }}

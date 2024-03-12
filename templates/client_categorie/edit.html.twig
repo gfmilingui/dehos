@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification de la Catégorie{% endblock %}
+
+{% block body %}
+    <div class="container-fluid title-area" style="margin-bottom: 10px;">
+        <h2 class="display-1 text-center">Modification de la Catégorie</h2>
+    </div>
+    <div class="container-fluid content-area" style="margin-bottom: 30px;">
+        <div class="for-flashes">
+            {% for message in app.flashes('notice-client-categorie') %}
+                <div class="bg-warning flash-notice mb-3 text-bold text-dark">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('success-client-categorie') %}
+                <div class="bg-success flash-success mb-3 text-bold text-white">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <p class="text-muted text-center">Les champs avec <span>*</span> sont obligatoires !</p>
+        {{ include('client_categorie/_form.html.twig', {'button_label': 'Update'}) }}
+        <a href="{{ path('app_client_categorie_show', {'id': client_categorie.id}) }}" class="btn btn-secondary btn-sm">
+            <i class="bi bi-eye-fill"></i> Consulter
+        </a>
+        <a href="{{ path('app_client_categorie_index') }}" class="btn btn-secondary btn-sm">
+            <i class="bi bi-backspace-fill"></i>
+            Retourner à la liste
+        </a>
+    </div>
+{% endblock %}

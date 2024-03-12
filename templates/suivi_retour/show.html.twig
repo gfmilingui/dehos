@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consultation Suivi Retour Bennes{% endblock %}
+
+{% block body %}
+    <div class="container-fluid title-area" style="margin-bottom: 10px;">
+        <h2 class="display-1 text-center">Consultation Suivi Retour Bennes</h2>
+    </div>
+    <div class="container-fluid content-area" style="margin-bottom: 30px;">
+        <div class="for-flashes">
+            {% for message in app.flashes('notice-suivisretours') %}
+                <div class="bg-warning flash-notice mb-3 text-bold text-dark">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('success-suivisretours') %}
+                <div class="bg-success flash-success mb-3 text-bold text-white">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <table class="table table-hover table-sm mb-3">
+            <tbody>
+                <tr>
+                    <th>#</th>
+                    <td>{{ suivi_retour.id }}</td>
+                </tr>
+                <tr>
+                    <th>Créé le</th>
+                    <td>{{ suivi_retour.createdAt ? suivi_retour.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Modifié le</th>
+                    <td>{{ suivi_retour.updatedAt ? suivi_retour.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Client</th>
+                    <td>{{ suivi_retour.getBonSortie.getDemande.getSite.getClient.nom ?? '' }}</td>
+                </tr>
+                <tr>
+                    <th>Site</th>
+                    <td>{{ suivi_retour.getBonSortie.getDemande.getSite.nom ?? '' }}</td>
+                </tr>
+                <tr>
+                    <th>Benne</th>
+                    <td>{{ suivi_retour.getBenne.getNumeroSerie }}</td>
+                </tr>
+                <tr>
+                    <th>Capacité</th>
+                    <td>{{ suivi_retour.getBenne.getCapacite }} {{ suivi_retour.getBenne.getCapaciteUnite }}</td>
+                </tr>
+                <tr>
+                    <th>Date retour benne</th>
+                    <td>{{ suivi_retour.dateRetourBenne ? suivi_retour.dateRetourBenne|date('d-m-Y H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Pesée Client (Kg)</th>
+                    <td>{{ suivi_retour.peseeClient }}</td>
+                </tr>
+                <tr>
+                    <th>Pesée Agent (Kg)</th>
+                    <td>{{ suivi_retour.peseeAgent }}</td>
+                </tr>
+                <tr>
+                    <th>Statut</th>
+                    <td>
+                        {% if suivi_retour.statut == "En attente de validation" %}
+                            <span class="badge rounded-pill bg-warning text-dark">
+                                {{ suivi_retour.statut}}
+                            </span>
+                        {% elseif suivi_retour.statut == "Validé" %}
+                            <span class="badge rounded-pill bg-success text-white">
+                                {{ suivi_retour.statut}}
+                            </span>
+                        {% else %}
+                            <span class="badge rounded-pill bg-info text-dark">
+                                {{ suivi_retour.statut}}
+                            </span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Remarques</th>
+                    <td>{{ suivi_retour.remarques }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        {% if suivi_retour.statut == "En attente de validation" %}
+        <a href="{{ path('app_suivi_retour_edit', {'id': suivi_retour.id}) }}" class="btn btn-info btn-sm">
+            <i class="bi bi-pencil-square" style="color: #fff;"></i>
+            Modifier
+        </a>
+        {% endif %}
+        <a href="#" class="btn btn-secondary btn-sm">
+            <i class="bi bi-printer-fill"></i>
+            Imprimer
+        </a>
+        <a href="{{ path('app_suivi_retour_index') }}" class="btn btn-secondary btn-sm">
+            <i class="bi bi-backspace-fill"></i>
+            Retourner à la liste
+        </a>
+    </div>
+{% endblock %}

@@ -1,0 +1,79 @@
+{# templates/login/index.html.twig #}
+{% extends 'base-login.html.twig' %}
+
+{% block navbar %}
+    {# ... Display nothing ... #}
+{% endblock %}
+
+{% block title %}Création du compte{% endblock %}
+
+{% block body %}
+    {# <div class="container-fluid login-body" style="margin: 0px; padding: 5%;"> #}
+    <div class="container-fluid" style="margin: 0px; padding: 2%;">
+            <div class="login-box">
+                <h1 class="display-1 text-center text-dark mb-3">Création du compte</h1>
+                {{ form_start(registrationForm) }}
+                    <div class="row mb-3">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4 text-center mb-3">
+                            <a class="" href="/">
+                                <img src="/assets/img/logo.png" alt="DEHOS App"class="d-inline-block align-text-top">
+                            </a>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                    {#
+                    {{ form_row(registrationForm.email) }}
+                    {{ form_row(registrationForm.plainPassword, {
+                        label: 'Password'
+                    }) }}
+                    #}
+
+                    <div class="row mb-3">
+                        <div class="col-md-4"></div>
+                         {{ form_row(registrationForm.email) }}
+                        <div class="col-md-4"></div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4"></div>
+                         {{ form_row(registrationForm.lastname) }}
+                        <div class="col-md-4"></div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4"></div>
+                         {{ form_row(registrationForm.firstname) }}
+                        <div class="col-md-4"></div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4"></div>
+                         {{ form_row(registrationForm.team) }}
+                        <div class="col-md-4"></div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4"></div>
+                        {{ form_row(registrationForm.roles) }}
+                        <div class="col-md-4"></div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4"></div>
+                        {{ form_row(registrationForm.plainPassword) }}
+                        <div class="col-md-4"></div>
+                    </div>
+        
+                    <div class="row mb-3">
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn btn-info btn-sm text-bold text-center">
+                                <i class="bi bi-box-arrow-in-right" style="color: #fff;"></i>
+                                Créer le compte
+                            </button>
+                        </div>
+                    </div>
+                {{ form_end(registrationForm) }}
+            <div>
+    </div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{{ form_start(form) }}
+    <div class="row">
+        <div class="mb-3 row-form col-md-4">
+            <label class="form-label">Client</label>
+            <input type="text" class="form-control form-control-sm" value="{{ traitement.getBonSortie.getDemande.getSite.getClient.nom ?? '' }}" disabled>
+        </div>
+        <div class="mb-3 row-form col-md-4">
+            <label class="form-label">Site</label>
+            <input type="text" class="form-control form-control-sm" value="{{ traitement.getBonSortie.getDemande.getSite.nom ?? '' }}" disabled>
+        </div>
+        <div class="mb-3 row-form col-md-4"></div>
+        <div class="mb-3 row-form col-md-4">
+            <label class="form-label">Numéro de série Benne</label>
+            <input type="text" class="form-control form-control-sm" value="{{ traitement.getBenne.getNumeroSerie }}" disabled>
+        </div>
+        <div class="mb-3 row-form col-md-4">
+            <label class="form-label">Capacité Benne</label>
+            <input type="text" class="form-control form-control-sm" value="{{ traitement.getBenne.getCapacite }} {{ traitement.getBenne.getCapaciteUnite }}" disabled>
+        </div>
+        <div class="mb-3 row-form col-md-4">
+            <label class="form-label">Statut Workflow</label>
+            <input type="text" class="form-control form-control-sm" value="{{ traitement.getBenne.getStatutWorkflow }}" disabled>
+        </div>
+        {{ form_row(form.date_reception) }}
+        {{ form_row(form.date_mise_traitement) }}
+        {{ form_row(form.date_fin_traitement) }}
+        {{ form_row(form.expedition_nettoyage) }}
+        <div class="mb-3 row-form col-md-4"></div>
+        {# {{ form_row(form.expedition_retour_stock) }} #}
+        {{ form_row(form.remarques) }}
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-success btn-sm">
+                <i class="bi bi-save-fill"></i>
+                {{ button_label|default('Sauvegarder') }}
+            </button>
+        </div>
+    </div>
+{{ form_end(form) }}

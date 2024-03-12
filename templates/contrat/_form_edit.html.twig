@@ -1,0 +1,20 @@
+{{ form_start(form) }}
+    <div class="row">
+        {{ form_row(form.numero) }}
+        {{ form_row(form.client) }}
+        {{ form_row(form.date_debut) }}
+        {{ form_row(form.date_fin) }}
+        <div class="md-3"></div>
+        {{ form_row(form.titre_contrat) }}
+        {{ form_row(form.description) }}
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-success btn-sm">
+                <i class="bi bi-save-fill"></i>
+                {{ button_label|default('Sauvegarder') }}
+            </button>
+        </div>
+    </div>
+{{ form_end(form) }}

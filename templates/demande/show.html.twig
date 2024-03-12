@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consultation de la demande{% endblock %}
+
+{% block body %}
+    <div class="container-fluid title-area" style="margin-bottom: 10px;">
+        <h2 class="display-1 text-center">Consultation de la demande</h2>
+    </div>
+    <div class="container-fluid content-area" style="margin-bottom: 30px;">
+        {% for message in app.flashes('notice-demandes') %}
+            <div class="bg-warning flash-notice mb-3 text-bold text-dark">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('success-demandes') %}
+            <div class="bg-success flash-notice mb-3 text-bold text-dark">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-sm mb-3">
+                    <tbody>
+                        <tr>
+                            <th class="table-label">#</th>
+                            <td>{{ demande.id }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Créée le</th>
+                            <td>{{ demande.createdAt ? demande.createdAt|date('d-m-Y H:i:s') : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Modifiée le</th>
+                            <td>{{ demande.updatedAt ? demande.updatedAt|date('d-m-Y H:i:s') : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Client</th>
+                            <td>{{ demande.getClient.nom }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Site</th>
+                            <td>{{ demande.getSite.nom }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Nombre bennes</th>
+                            <td>{{ demande.nombreBennes }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Date</th>
+                            <td>{{ demande.date ? demande.date|date('d-m-Y') : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Statut</th>
+                            <td>{{ demande.statut }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="mb-3">
+                     {% if (demande.statut == "Affecter") %}
+                        <a href="{{ path('app_demande_edit', {'id': demande.id}) }}" class="btn btn-info btn-sm">
+                            <i class="bi bi-pencil-square" style="color: #fff;"></i>
+                            Modifier
+                        </a>
+                    {% endif %}
+                    <a href="#" class="btn btn-secondary btn-sm">
+                        <i class="bi bi-printer-fill"></i>
+                        Imprimer
+                    </a>
+                    <a href="{{ path('app_demande_index') }}" class="btn btn-secondary btn-sm">
+                        <i class="bi bi-backspace-fill"></i>
+                        Retourner à la liste
+                    </a>
+                    {% if (demande.statut == "Affecter") %}
+                        {{ include('demande/_delete_form.html.twig') }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Bennes</h3>
+                <table class="table table-hover table-sm" id="">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Numéro série</th>
+                            <th>Capacité</th>
+                            {# <th>Etat</th>
+                            <th>Affectée à</th>
+                            <th>Site</th>
+                            <th>Date</th>
+                            <th>Statut workflow</th>
+                            <th style="text-align: center;">Actions</th>#}
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% if demande.getBonSortie.getBennes is defined %}
+                        {% for benne in demande.getBonSortie.getBennes %}
+                            <tr>
+                                <td>{{ benne.id }}</td>
+                                <td>{{ benne.numeroSerie }}</td>
+                                <td>{{ benne.capacite }} {{ benne.capaciteUnite }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="3">Aucunes données trouvées</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="3">Aucunes données trouvées</td>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New BonSortie{% endblock %}
+
+{% block body %}
+    <h1>Create new BonSortie</h1>
+
+    {{ include('bon_sortie/_form.html.twig') }}
+
+    <a href="{{ path('app_bon_sortie_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un Contrats{% endblock %}
+
+{% block body %}
+   <div class="container-fluid title-area" style="margin-bottom: 10px;">
+        <h2 class="display-1 text-center">Ajouter un Contrats</h2>
+    </div>
+    <div class="container-fluid content-area" style="margin-bottom: 30px;">
+        <div class="for-flashes">
+            {% for message in app.flashes('notice-contrats') %}
+                <div class="bg-warning flash-notice mb-3 text-bold text-dark">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('success-contrats') %}
+                <div class="bg-success flash-success mb-3 text-bold text-white">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <p class="text-muted text-center">Les champs avec <span>*</span> sont obligatoires !</p>
+        {{ include('contrat/_form.html.twig') }}
+        <a href="{{ path('app_contrat_index') }}" class="btn btn-secondary btn-sm">
+            <i class="bi bi-backspace-fill"></i>
+            Retourner à la liste
+        </a>
+    </div>
+{% endblock %}

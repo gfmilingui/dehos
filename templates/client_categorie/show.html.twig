@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consultation de la Catégorie du Client{% endblock %}
+
+{% block body %}
+    <div class="container-fluid title-area" style="margin-bottom: 10px;">
+        <h2 class="display-1 text-center">Consultation de la Catégorie du Client</h2>
+    </div>
+    <div class="container-fluid content-area" style="margin-bottom: 30px;">
+        <div class="for-flashes">
+            {% for message in app.flashes('notice-client-categorie') %}
+                <div class="bg-warning flash-notice mb-3 text-bold text-dark">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('success-client-categorie') %}
+                <div class="bg-success flash-success mb-3 text-bold text-white">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th class="table-label">#</th>
+                            <td>{{ client_categorie.id }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Created_at</th>
+                            <td>{{ client_categorie.createdAt ? client_categorie.createdAt|date('d-m-Y H:i:s') : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Updated_at</th>
+                            <td>{{ client_categorie.updatedAt ? client_categorie.updatedAt|date('d-m-Y H:i:s') : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Nom</th>
+                            <td>{{ client_categorie.nom }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Label</th>
+                            <td>{{ client_categorie.label }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Description</th>
+                            <td>{{ client_categorie.description }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="mb-3">
+                    <a href="{{ path('app_client_categorie_edit', {'id': client_categorie.id}) }}" class="btn btn-info btn-sm">
+                        <i class="bi bi-pencil-square" style="color: #fff;"></i>
+                        Modifier
+                    </a>
+                    <a href="#" class="btn btn-secondary btn-sm">
+                        <i class="bi bi-printer-fill"></i>
+                        Imprimer
+                    </a>
+                    <a href="{{ path('app_client_categorie_index') }}" class="btn btn-secondary btn-sm">
+                        <i class="bi bi-backspace-fill"></i>
+                        Retourner à la liste
+                    </a>
+                </div>
+            </div>
+        </div>
+                <hr/>
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Clients</h3>
+                <table class="table table-hover table-sm" id="">
+                    <thead>
+                        <tr>
+                            <th>Créé le</th>
+                            <th>Nom</th>
+                            <th>Numéro Téléphone</th>
+                            <th>Adresse</th>
+                            <th>Ville</th>
+                            <th>Pays</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for client in client_categorie.getClient %}
+                        <tr>
+                            <td>{{ client.createdAt ? client.createdAt|date('d-m-Y') : '' }}</td>
+                            <td>{{ client.nom }}</td>
+                            <td>{{ client.numTel }}</td>
+                            <td>{{ client.adresse }}</td>
+                            <td>{{ client.ville }}</td>
+                            <td>{{ client.pays }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="9">Aucunes données trouvées</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{{ form_start(form) }}
+    <div class="row">
+        {{ form_row(form.email) }}
+        {{ form_row(form.lastname) }}
+        {{ form_row(form.firstname) }}
+        {{ form_row(form.team) }}
+        {{ form_row(form.roles) }}
+        {{ form_row(form.plainPassword) }}
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-success btn-sm">
+                <i class="bi bi-save-fill"></i>
+                {{ button_label|default('Sauvegarder') }}
+            </button>
+        </div>
+    </div>
+{{ form_end(form) }}

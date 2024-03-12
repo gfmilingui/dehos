@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="Dehos App" />
+        <meta name="author" content="Dehos" />
+        <title>{% block title %}Dehos App{% endblock %}</title>
+        <!-- 
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <link href="css/styles.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+        -->
+        <!-- <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>"> -->
+        <!-- favicon -->
+        <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+            <!-- Theme -->
+            <link href="/assets/themes/sb/dist/css/styles.css" rel="stylesheet" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+            <!-- App -->
+            {# {{ encore_entry_link_tags('app') }} #}
+            <!-- bootstrap css -->
+            <link rel="stylesheet" href="/assets/bootstrap-5.1/css/bootstrap.min.css">
+            <!-- bootstrap icon -->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.0/font/bootstrap-icons.css">
+            <!-- Template css -->
+            <!-- <link href="/assets/themes/static/css/app.css" rel="stylesheet"> -->
+	        <!-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet"> -->
+            
+            <!-- datatable css -->
+            <!-- <link rel="stylesheet" href="/assets/datatables/css/jquery.dataTables.min.css"> -->
+            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.12.1/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/r-2.3.0/datatables.min.css"/>
+
+            <!-- app css -->
+            <link rel="stylesheet" href="/assets/app/css/appMain.css">
+        {% endblock %}
+    </head>
+    <body class="sb-nav-fixed">
+        {% block navbar_sb_topnav %}
+            {% include 'navbar/sb_topnav.html.twig' %}
+        {% endblock %}
+        <div id="layoutSidenav">
+            {% block navbar_layoutSidenav_nav %}
+                {% include 'navbar/layoutSidenav_nav.html.twig' %}
+            {% endblock %}
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        {% block breadcrumb %}
+                            {#
+                            <h1 class="mt-4">Dashboard</h1>
+                            <ol class="breadcrumb mb-4">
+                                <li class="breadcrumb-item active">Dashboard</li>
+                            </ol>
+                            #}
+                        {% endblock %}
+                        <div class="wrapper-body">
+                            {% block body %}{% endblock %}
+                        </div>
+                    </div>
+                </main>
+                {% block footer %}
+                    {% include 'footer/footer.html.twig' %}
+                {% endblock %}
+            </div>
+        </div>
+        <!--
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="js/scripts.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+        <script src="assets/demo/chart-area-demo.js"></script>
+        <script src="assets/demo/chart-bar-demo.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+        <script src="js/datatables-simple-demo.js"></script>
+        -->
+        {% block javascripts %}
+            {# {{ encore_entry_script_tags('app') }} #}
+            <!-- bootstrap js -->
+            <script src="/assets/bootstrap-5.1/js/bootstrap.min.js"></script>
+            <!-- theme js -->
+            <script src="/assets/themes/sb/dist/js/scripts.js"></script>
+            <!-- jquery js cdn -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <!-- app js -->
+            <!-- <script src="/assets/datatables/js/jquery.dataTables.min.js"></script> -->
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+            <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/r-2.3.0/datatables.min.js"></script>
+            
+            <!-- app js -->
+            <script src="/assets/app/js/appMain.js"></script>
+        {% endblock %}
+    </body>
+</html>

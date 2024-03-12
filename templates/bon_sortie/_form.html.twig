@@ -1,0 +1,46 @@
+{{ form_start(form) }}
+    <div class="row">
+        <div class="mb-3 row-form col-md-4">
+            <label class="form-label">#</label>
+            <input type="text" class="form-control form-control-sm" value="{{ bon_sortie.id }}" disabled>
+        </div>
+        <div class="mb-3 row-form col-md-4">
+            <label class="form-label">Créé le</label>
+            <input type="text" class="form-control form-control-sm" value="{{ bon_sortie.createdAt ? bon_sortie.createdAt|date('Y-m-d H:i:s') : '' }}" disabled>
+        </div>
+        <div class="mb-3 row-form col-md-4">
+            <label class="form-label">Modifié le</label>
+            <input type="text" class="form-control form-control-sm" value="{{ bon_sortie.updatedAt ? bon_sortie.updatedAt|date('Y-m-d H:i:s') : '' }}" disabled>
+        </div>
+         <div class="mb-3 row-form col-md-4">
+            <label class="form-label">Client</label>
+            <input type="text" class="form-control form-control-sm" value="{{ bon_sortie.getDemande.getSite.getClient.nom ?? '' }}" disabled>
+        </div>
+        <div class="mb-3 row-form col-md-4">
+            <label class="form-label">Site</label>
+            <input type="text" class="form-control form-control-sm" value="{{ bon_sortie.getDemande.getSite.nom ?? '' }}" disabled>
+        </div>
+        <div class="mb-3 row-form col-md-4">
+            <label class="form-label">Nombre de Bennes</label>
+            <input type="text" class="form-control form-control-sm" value="{{ bon_sortie.getBennes | length }}" disabled>
+        </div>
+        <div class="mb-3 row-form col-md-4">
+            <label class="form-label">Statut Bon de Sortie</label>
+            <input type="text" class="form-control form-control-sm" value="{{ bon_sortie.statut }}" disabled>
+        </div>
+        {{ form_row(form.reference) }}
+        <div class="mb-3 row-form col-md-4"></div>
+        {{ form_row(form.date_sortie) }}
+        {{ form_row(form.nom_fourgon_chauffeur) }}
+        {# {{ form_row(form.statut) }} #}
+        {{ form_row(form.remarque) }}
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-success btn-sm">
+                <i class="bi bi-save-fill"></i>
+                {{ button_label|default('Sauvegarder') }}
+            </button>
+        </div>
+    </div>
+{{ form_end(form) }}

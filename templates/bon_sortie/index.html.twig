@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Bons de Sortie{% endblock %}
+
+{% block body %}
+    <div class="container-fluid title-area" style="margin-bottom: 10px;">
+        <h2 class="display-1 text-center">Liste des Bons de Sortie</h2>
+    </div>
+    <div class="container-fluid content-area table-responsive" style="margin-bottom: 30px;">
+        <div class="for-flashes">
+            {% for message in app.flashes('notice-bonsorties') %}
+                <div class="bg-warning flash-notice mb-3 text-bold text-dark">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('success-bonsorties') %}
+                <div class="bg-success flash-success mb-3 text-bold text-white">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <table class="table table-hover table-sm" id="tableIndexView">
+            <thead>
+                <tr>
+                    <th>Créé le</th>
+                    <th>Référence</th>
+                    <th>Client</th>
+                    <th>Site</th>
+                    <th>Nbr Bennes</th>
+                    <th>Statut</th>
+                    <th>Date de sortie</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for bon_sortie in bon_sorties %}
+                <tr>
+                    <td>{{ bon_sortie.createdAt ? bon_sortie.createdAt|date('d-m-Y') : '' }}</td>
+                    <td>{{ bon_sortie.reference }}</td>
+                    <td>{{ bon_sortie.getDemande.getSite.getClient.nom ?? '' }}</td>
+                    <td>{{ bon_sortie.getDemande.getSite.nom ?? '' }}</td>
+                    <td>{{ bon_sortie.getBennes | length }}</td>
+                    <td>
+                        {% if bon_sortie.statut == "En attente de validation" %}
+                            <span class="badge rounded-pill bg-warning text-dark">
+                                {{ bon_sortie.statut}}
+                            </span>
+                        {% elseif bon_sortie.statut == "Validé" %}
+                            <span class="badge rounded-pill bg-success text-white">
+                                {{ bon_sortie.statut}}
+                            </span>
+                        {% endif %}
+                    </td>
+                    <td>{{ bon_sortie.getDateSortie ? bon_sortie.getDateSortie|date('d-m-Y H:i:s') : '' }}</td>
+                    <td style="text-align: center;">
+                            <a href="{{ path('app_bon_sortie_show', {'id': bon_sortie.id}) }}"><i class="bi bi-eye-fill" style="color: #6c757d;"></i></a>
+                            {% if bon_sortie.statut == "En attente de validation" %}
+                                <a href="{{ path('app_bon_sortie_edit', {'id': bon_sortie.id}) }}"><i class="bi bi-pencil-square" style="color: #6c757d;"></i></a>
+                            {% endif %}
+                            <a href="#" class=""><i class="bi bi-printer-fill" style="color: #6c757d;"></i></a>
+                            {% if bon_sortie.statut == "En attente de validation" %}
+                                <a href="{{ path('app_bon_sortie_valider', {'id': bon_sortie.id}) }}" class=""><i class="bi bi-check-square-fill" style="font-size: 1.3rem; color: green;"></i></a>
+                            {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="8">Aucunes données trouvées</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="#" class="btn btn-secondary btn-sm">
+            <i class="bi bi-printer-fill"></i>
+            Imprimer
+        </a>
+    </div>
+{% endblock %}

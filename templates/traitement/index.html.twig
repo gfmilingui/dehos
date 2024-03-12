@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Traitements{% endblock %}
+
+{% block body %}
+    <div class="container-fluid title-area" style="margin-bottom: 10px;">
+        <h2 class="display-1 text-center">Liste des Traitements</h2>
+    </div>
+    <div class="container-fluid content-area table-responsive" style="margin-bottom: 30px;">
+        <div class="for-flashes">
+            {% for message in app.flashes('notice-traitements') %}
+                <div class="bg-warning flash-notice mb-3 text-bold text-dark">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('success-traitements') %}
+                <div class="bg-success flash-success mb-3 text-bold text-white">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <table class="table table-hover table-sm"  id="tableIndexView">
+            <thead>
+                <tr>
+                    <th>Client</th>
+                    <th>Site</th>
+                    <th>Benne</th>
+                    <th>Réception</th>
+                    <th>Mise traitement</th>
+                    <th>Statut</th>
+                    <th style="text-align: center;">actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for traitement in traitements %}
+                <tr>
+                    <td>{{ traitement.getBonSortie.getDemande.getSite.getClient.nom ?? '' }}</td>
+                    <td>{{ traitement.getBonSortie.getDemande.getSite.nom ?? '' }}</td>
+                    <td>{{ traitement.getBenne.getNumeroSerie ?? '' }}</td>
+                    <td>{{ traitement.dateReception ? traitement.dateReception|date('d-m-Y H:i:s') : '' }}</td>
+                    <td>{{ traitement.dateMiseTraitement ? traitement.dateMiseTraitement|date('d-m-Y H:i:s') : '' }}</td>
+                    <td>
+                        {% if traitement.statut == "En attente de validation" %}
+                            <span class="badge rounded-pill bg-warning text-dark">
+                                {{ traitement.statut}}
+                            </span>
+                        {% elseif traitement.statut == "Validé" %}
+                            <span class="badge rounded-pill bg-success text-white">
+                                {{ traitement.statut}}
+                            </span>
+                        {% else %}
+                            <span class="badge rounded-pill bg-info text-dark">
+                                {{ traitement.statut}}
+                            </span>
+                        {% endif %}
+                    </td>
+                    <td style="text-align: center;">
+                            {#
+                            <a href="#" class=""><i class="bi bi-printer-fill" style="color: #0dcaf0;"></i></a>
+                            <a href="{{ path('app_traitement_show', {'id': traitement.id}) }}"><i class="bi bi-eye-fill" style="color: #6c757d;"></i></a>
+                            
+                            app_traitement_retour_stock
+
+                            #}
+                            <a href="{{ path('app_traitement_show', {'id': traitement.id}) }}"><i class="bi bi-eye-fill" style="color: #6c757d;"></i></a>
+                            {% if traitement.statut == "En attente de validation" %}
+                                <a href="{{ path('app_traitement_edit', {'id': traitement.id}) }}"><i class="bi bi-pencil-square" style="color: #6c757d;"></i></a>
+                            {% endif %}
+                            <a href="#" class=""><i class="bi bi-printer-fill" style="color: #0dcaf0;"></i></a>
+                            {% if traitement.statut == "En attente de validation" %}
+                                <a href="{{ path('app_traitement_valider', {'id': traitement.id}) }}" class=""><i class="bi bi-check-square-fill" style="font-size: 1.3rem; color: green;"></i></a>
+                            {% endif %}
+                            {% if traitement.getBenne.getStatutWorkflow == "Traitement Validé : Traitement" and traitement.statut == "Validé" and traitement.getExpeditionRetourStock == "Non"%}
+                                <a href="{{ path('app_traitement_retour_stock', {'id': traitement.id}) }}" class="badge bg-warning" style="text-decoration: none; width: 130px;">
+                                        <span class="text-bold text-dark">Retour Stock</span>
+                                </a>
+                            {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="10">Aucunes données trouvées</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="#" class="btn btn-secondary btn-sm">
+            <i class="bi bi-printer-fill"></i>
+            Imprimer
+        </a>
+    </div>
+{% endblock %}

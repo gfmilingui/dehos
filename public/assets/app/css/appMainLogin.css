@@ -1,0 +1,181 @@
+.btn {
+    width: 180px;
+    text-align: left;
+    margin-top: 7px;
+}
+
+.form-label {
+    color: #000;
+    font-size: larger;
+    font-weight: bold;
+}
+
+.table-label {
+    color: #000;
+    font-size: larger;
+    font-weight: bold;
+}
+
+.row-form li {
+    color: red;
+    font-size: larger;
+    font-weight: bold;
+}
+
+.nav-link,
+.dropdown-item,
+.navbar-text {
+    color: #000;
+    font-size: smaller;
+    font-weight: bold;
+}
+
+.navbar-brand {
+    /*color: rgba(0,0,0,.9);*/
+    color: #000;
+    font-weight: bold;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.flash-notice {
+    padding: 10px;
+    background-color: rgb(221, 137, 27);
+    width: fit-content;
+    /*color: black;*/
+}
+
+.display-1 {
+    font-size: 3rem;
+}
+
+.login-box {
+    /* border: 1px solid #ddd; */
+    min-width: 200px;
+    padding: 10px;
+    /*background-color: #000;*/
+    background-color: #000000ed;
+    background-image: url(/assets/img/syringe.jpg);
+    /*background-size: 100%;*/
+    background-size: cover;
+}
+
+.login-box label {
+    color: #fff;
+    color: #000;
+    color: rgb(221, 137, 27);
+}
+
+.login-box input {
+    text-align: center;
+}
+
+html,
+body {
+    margin: 0px;
+    height: 100%;
+}
+
+.dropdown-menu {
+    border-radius: 0px;
+    /* background-color: #000; */
+    background-color: #66919d;
+    padding: 0px;
+    border: 0px;
+}
+
+.dropdown-menu li {
+    color: #fff;
+    border-bottom: 1px solid #2e4850;
+    /*transition: all 0.5s ease-out;*/
+}
+
+.dropdown-menu a {
+    color: #fff;
+    padding: 15px;
+    text-transform: uppercase;
+}
+
+.dropdown-item:focus,
+.dropdown-item:hover {
+    /*color: #1e2125;*/
+    /*color: rgb(0 0 0);*/
+    color: rgb(0 0 0);
+    /* background-color: #e9ecef; */
+    background-color: #fff;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    /*color: rgb(0 0 0);*/
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.navbar-dark .navbar-text {
+    /*color: rgb(0 0 0);*/
+    color: #fff;
+}
+
+.navbar-dark .navbar-nav .nav-link:focus,
+.navbar-dark .navbar-nav .nav-link:hover {
+    /* color: rgba(255,255,255,.75); */
+    color: black;
+}
+
+.navbar-dark .navbar-nav .nav-link.active,
+.navbar-dark .navbar-nav .show>.nav-link {
+    /*color: #fff;*/
+    color: black;
+}
+
+/*
+nav .nav-link:hover {
+    color: rgba(255,255,255,.75);
+}
+*/
+
+.navbar-dark .navbar-text a:hover {
+    color: #fff;
+}
+
+.navbar-dark .navbar-text a:hover {
+    color: #000;
+    color: blck;
+}
+
+/*
+.wrapper-body-login {
+    padding: 20px;
+    background-color: #ddd;
+    background-image: url(/assets/img/lab.jpg);
+    background-repeat: repeat-y;
+    background-repeat: repeat-x;
+}
+
+@media (min-width: 1250px) {
+    .wrapper-body-login {
+        padding: 20px;
+        background-color: #ddd;
+        background-image: url(/assets/img/lab.jpg);
+        background-repeat: repeat-y;
+        height: 100%;
+    }
+}
+*/
+
+body {
+    background-color: #ddd;
+    background-color: #e3e3e3;
+}
+
+.title-area {
+    background-color: #fff;
+    margin-bottom: 10px;
+}
+
+.content-area {
+    background-color: #fff;
+    padding: 20px;
+}

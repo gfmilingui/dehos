@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Bennes{% endblock %}
+
+{% block body %}
+    <div class="container-fluid title-area" style="margin-bottom: 10px;">
+        <h2 class="display-1 text-center">Liste des Bennes</h2>
+    </div>
+    <div class="container-fluid content-area table-responsive" style="margin-bottom: 30px;">
+        <div class="for-flashes">
+            {% for message in app.flashes('notice-bennes') %}
+                <div class="bg-warning flash-notice mb-3 text-bold text-dark">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('success-bennes') %}
+                <div class="bg-success flash-success mb-3 text-bold text-white">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <table class="table table-hover table-sm" id="tableIndexView">
+            <thead>
+                <tr>
+                    <th>Numéro série</th>
+                    <th>Etat</th>
+                    <th>Affectée à</th>
+                    <th>Site</th>
+                    <th>Date</th>
+                    <th>Statut workflow</th>
+                    <th style="text-align: center;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for benne in bennes %}
+                <tr>
+                    <td>{{ benne.numeroSerie }}</td>
+                    <td>
+                        {% if benne.etat == "Libre" %}
+                            <span class="badge rounded-pill bg-success text-white">
+                                {{ benne.etat}}
+                            </span>
+                        {% elseif benne.etat == "En attende de validation" %}
+                            <span class="badge rounded-pill bg-warning text-dark">
+                                {{ benne.etat}}
+                            </span>
+                        {% else %}
+                            <span class="badge rounded-pill bg-info text-dark">
+                                {{ benne.etat}}
+                            </span>
+                        {% endif %}
+                    </td>
+                    <td>{{ benne.getSite.getClient.getNom ?? '' }}</td>
+                    <td>{{ benne.getSite.getNom ?? '' }}</td>
+                    <td>
+                        {% if benne.getSite is not null and benne.dateLivraison is null %}
+                            <span class="text-bold text-danger">
+                                Affectation : aucune date
+                            </span>
+                        {% else %}
+                            {{ benne.dateLivraison ? benne.dateLivraison|date('d-m-Y H:i:s') : '' }}
+                        {% endif %}
+                    </td>
+                    <td class="text-bold text-muted">{{ benne.statutWorkflow }}</td>
+                    <td style="text-align: center;">
+                        <a href="{{ path('app_benne_show', {'id': benne.id}) }}"><i class="bi bi-eye-fill" style="color: #6c757d;"></i></a>
+                        <a href="{{ path('app_benne_edit', {'id': benne.id}) }}"><i class="bi bi-pencil-square" style="color: #6c757d;"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="11">Aucunes données trouvées</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_benne_new') }}" class="btn btn-info btn-sm">
+            <i class="bi bi-plus-circle" style="color: #fff;"></i>
+            Nouvelle Benne
+        </a>
+        <a href="#" class="btn btn-secondary btn-sm">
+            <i class="bi bi-printer-fill"></i>
+            Imprimer
+        </a>
+    </div>
+{% endblock %}

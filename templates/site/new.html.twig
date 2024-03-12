@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un nouveau site{% endblock %}
+
+{% block body %}
+    <div class="container-fluid title-area" style="margin-bottom: 10px;">
+        <h2 class="display-1 text-center">Ajouter un nouveau site</h2>
+    </div>
+    <div class="container-fluid content-area" style="margin-bottom: 30px;">
+        {% for message in app.flashes('notice-site') %}
+            <div class="bg-warning flash-notice mb-3 text-bold text-dark">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('success-site') %}
+            <div class="flash-notice mb-3 text-bold text-dark">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {{ include('site/_form.html.twig') }}
+
+        <a href="{{ path('app_site_index') }}" class="btn btn-secondary btn-sm">
+            <i class="bi bi-backspace-fill"></i>
+            Retourner à la liste
+        </a>
+    </div>
+{% endblock %}

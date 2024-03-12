@@ -1,0 +1,162 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consultation du Bon de Sortie{% endblock %}
+
+{% block body %}
+    <div class="container-fluid title-area" style="margin-bottom: 10px;">
+        <h2 class="display-1 text-center">Consultation du Bon de Sortie</h2>
+    </div>
+    <div class="container-fluid content-area" style="margin-bottom: 30px;">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Bon de sortie</h3>
+                <table class="table table-sm mb-3">
+                    <tbody>
+                        <tr>
+                            <th class="table-label">#</th>
+                            <td>{{ bon_sortie.id }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Créé le</th>
+                            <td>{{ bon_sortie.createdAt ? bon_sortie.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Modifié le</th>
+                            <td>{{ bon_sortie.updatedAt ? bon_sortie.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Référence</th>
+                            <td>{{ bon_sortie.reference }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Client</th>
+                            {# <td>{{ bon_sortie.getBenne.getAffecteeA.getNom }}</td> #}
+                            <td>{{ bon_sortie.getDemande.getSite.getClient.nom ?? '' }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Site</th>
+                            <td>{{ bon_sortie.getDemande.getSite.nom ?? '' }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Nombre de Bennes</th>
+                            <td>{{ bon_sortie.getBennes | length }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Date de sortie</th>
+                            <td>{{ bon_sortie.getDateSortie ? bon_sortie.getDateSortie|date('Y-m-d H:i:s') : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Statut Bon de Sortie</th>
+                            <td>
+                                {% if bon_sortie.statut == "En attente de validation" %}
+                                    <span class="badge rounded-pill bg-warning text-dark">
+                                        {{ bon_sortie.statut}}
+                                    </span>
+                                {% elseif bon_sortie.statut == "Validé" %}
+                                    <span class="badge rounded-pill bg-success text-white">
+                                        {{ bon_sortie.statut}}
+                                    </span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Nom fourgon (Chauffeur)</th>
+                            <td>{{ bon_sortie.nomFourgonChauffeur }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-label">Remarques</th>
+                            <td>{{ bon_sortie.remarque }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="mb-3">
+                    {% if bon_sortie.statut == "En attente de validation" %}
+                        <a href="{{ path('app_bon_sortie_edit', {'id': bon_sortie.id}) }}" class="btn btn-info btn-sm">
+                            <i class="bi bi-pencil-square" style="color: #fff;"></i>
+                            Modifier
+                        </a>
+                    {% endif %}
+                    <a href="#" class="btn btn-secondary btn-sm">
+                        <i class="bi bi-printer-fill"></i>
+                        Imprimer
+                    </a>
+                    <a href="{{ path('app_bon_sortie_index') }}" class="btn btn-secondary btn-sm">
+                        <i class="bi bi-backspace-fill"></i>
+                        Retourner à la liste
+                    </a>
+                </div>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Bennes</h3>
+                <table class="table table-hover table-sm" id="">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Numéro série</th>
+                            <th>Capacité</th>
+                            {# <th>Etat</th>
+                            <th>Affectée à</th>
+                            <th>Site</th>
+                            <th>Date</th>
+                            <th>Statut workflow</th>
+                            <th style="text-align: center;">Actions</th>#}
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for benne in bon_sortie.getBennes %}
+                        <tr>
+                            <td>{{ benne.id }}</td>
+                            <td>{{ benne.numeroSerie }}</td>
+                            <td>{{ benne.capacite }} {{ benne.capaciteUnite }}</td>
+                            {# <td>
+                                {% if benne.etat == "Libre" %}
+                                    <span class="badge rounded-pill bg-success text-white">
+                                        {{ benne.etat}}
+                                    </span>
+                                {% elseif benne.etat == "En attende de validation" %}
+                                    <span class="badge rounded-pill bg-warning text-dark">
+                                        {{ benne.etat}}
+                                    </span>
+                                {% elseif benne.etat == "Bon de sortie Validé" %}
+                                    <span class="badge rounded-pill bg-success text-white">
+                                        {{ benne.etat}}
+                                    </span>
+                                {% else %}
+                                    <span class="badge rounded-pill bg-info text-dark">
+                                        {{ benne.etat}}
+                                    </span>
+                                {% endif %}
+                            </td>
+                            <td>{{ benne.getDemande.getSite.getClient.getNom ?? '' }}</td>
+                            <td>{{ benne.getDemande.getSite.getNom ?? '' }}</td>
+                            <td>
+                                {% if benne.getDemande.getSite is not null and benne.dateLivraison is null %}
+                                    <span class="text-bold text-danger">
+                                        Affectation : aucune date
+                                    </span>
+                                {% else %}
+                                    {{ benne.dateLivraison ? benne.dateLivraison|date('d-m-Y H:i:s') : '' }}
+                                {% endif %}
+                            </td>
+                            <td class="text-bold text-muted">{{ benne.statutWorkflow }}</td>
+                            <td style="text-align: center;">
+                                <a href="{{ path('app_benne_show', {'id': benne.id}) }}"><i class="bi bi-eye-fill" style="color: #6c757d;"></i></a>
+                                <a href="{{ path('app_benne_edit', {'id': benne.id}) }}"><i class="bi bi-pencil-square" style="color: #6c757d;"></i></a>
+                                <a href="#" class=""><i class="bi bi-printer-fill" style="color: #0dcaf0;"></i></a>
+                            </td>#}
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="11">Aucunes données trouvées</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{{ form_start(form) }}
+    <div class="row">
+        {{ form_row(form.client) }}
+        {{ form_row(form.site) }}
+        {{ form_row(form.nombre_bennes) }}
+        {{ form_row(form.date) }}
+    </div>
+    {#
+    <div class="row">
+        <div class="mb-3 row-form col-md-3"></div>
+        <div class="mb-3 row-form col-md-3"></div>
+        <div class="mb-3 row-form col-md-3">
+            <label class="form-label">Bennes Libres (Disponibles)</label>
+            <input id="demande_nombre_bennes_libre" type="text" class="form-control form-control-sm" value="{{ demande.getSite.getNumberBenneAvailabled ?? "" }}" disabled>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mb-3 row-form col-md-3"></div>
+        <div class="mb-3 row-form col-md-3"></div>
+        <div class="mb-3 row-form col-md-3">
+            <label class="form-label">Bennes Allouées (Nombre Benne)</label>
+            <input id="demande_nombre_bennes_allouees" type="text" class="form-control form-control-sm" value="{{ demande.getSite.getNombreBennes ?? "" }}" disabled>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mb-3 row-form col-md-3"></div>
+        <div class="mb-3 row-form col-md-3"></div>
+        <div class="mb-3 row-form col-md-3">
+            <label class="form-label">Bennes Affectées</label>
+            <input id="demande_nombre_bennes_affectee" type="text" class="form-control form-control-sm" value="{{ demande.getSite.getNumBenneAffected ?? "" }}" disabled>
+        </div>
+    </div>
+    #}
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-success btn-sm">
+                <i class="bi bi-save-fill"></i>
+                {{ button_label|default('Sauvegarder') }}
+            </button>
+        </div>
+    </div>
+{{ form_end(form) }}

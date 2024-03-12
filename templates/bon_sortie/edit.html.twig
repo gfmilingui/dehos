@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification du bon de sortie{% endblock %}
+
+{% block body %}
+    <div class="container-fluid title-area" style="margin-bottom: 10px;">
+        <h2 class="display-1 text-center">Modification du bon de sortie</h2>
+    </div>
+    <div class="container-fluid content-area" style="margin-bottom: 30px;">
+        <div class="for-flashes">
+            {% for message in app.flashes('notice-bonsorties') %}
+                <div class="bg-warning flash-notice mb-3 text-bold text-dark">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('success-bonsorties') %}
+                <div class="bg-success flash-success mb-3 text-bold text-white">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <p class="text-muted text-center">Les champs avec <span>*</span> sont obligatoires !</p>
+        {{ include('bon_sortie/_form.html.twig', {'button_label': 'Update'}) }}
+        <a href="{{ path('app_bon_sortie_show', {'id': bon_sortie.id}) }}" class="btn btn-secondary btn-sm">
+            <i class="bi bi-eye-fill"></i> Consulter
+        </a>
+        <a href="{{ path('app_bon_sortie_index') }}" class="btn btn-secondary btn-sm">
+            <i class="bi bi-backspace-fill"></i>
+            Retourner à la liste
+        </a>
+
+        <hr/>
+
+        <div class="row" style="margin-top: 20px;">
+            <div class="col-md-12">
+                <h3>Bennes</h3>
+                <table class="table table-hover table-sm" id="tableIndexView">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Numéro série</th>
+                            <th>Capacité</th>
+                            <th>Etat</th>
+                            <th>Affectée à</th>
+                            <th>Site</th>
+                            <th>Date</th>
+                            <th>Statut workflow</th>
+                            <th style="text-align: center;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for benne in bon_sortie.getBennes %}
+                        <tr>
+                            <td>{{ benne.id }}</td>
+                            <td>{{ benne.numeroSerie }}</td>
+                            <td>{{ benne.capacite }} {{ benne.capaciteUnite }}</td>
+                            <td>
+                                {% if benne.etat == "Libre" %}
+                                    <span class="badge rounded-pill bg-success text-white">
+                                        {{ benne.etat}}
+                                    </span>
+                                {% elseif benne.etat == "En attende de validation" %}
+                                    <span class="badge rounded-pill bg-warning text-dark">
+                                        {{ benne.etat}}
+                                    </span>
+                                {% elseif benne.etat == "Bon de sortie Validé" %}
+                                    <span class="badge rounded-pill bg-success text-white">
+                                        {{ benne.etat}}
+                                    </span>
+                                {% else %}
+                                    <span class="badge rounded-pill bg-info text-dark">
+                                        {{ benne.etat}}
+                                    </span>
+                                {% endif %}
+                            </td>
+                            <td>{{ benne.getSite.getClient.getNom ?? '' }}</td>
+                            <td>{{ benne.getSite.getNom ?? '' }}</td>
+                            <td>
+                                {% if benne.getSite is not null and benne.dateLivraison is null %}
+                                    <span class="text-bold text-danger">
+                                        Affectation : aucune date
+                                    </span>
+                                {% else %}
+                                    {{ benne.dateLivraison ? benne.dateLivraison|date('d-m-Y H:i:s') : '' }}
+                                {% endif %}
+                            </td>
+                            <td class="text-bold text-muted">{{ benne.statutWorkflow }}</td>
+                            <td style="text-align: center;">
+                                <a href="{{ path('app_benne_show', {'id': benne.id}) }}"><i class="bi bi-eye-fill" style="color: #6c757d;"></i></a>
+                                <a href="{{ path('app_benne_edit', {'id': benne.id}) }}"><i class="bi bi-pencil-square" style="color: #6c757d;"></i></a>
+                                <a href="#" class=""><i class="bi bi-printer-fill" style="color: #0dcaf0;"></i></a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="11">Aucunes données trouvées</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

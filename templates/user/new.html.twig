@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un Compte Utilisateur{% endblock %}
+
+{% block body %}
+    <div class="container-fluid title-area" style="margin-bottom: 10px;">
+        <h2 class="display-1 text-center">Ajouter un Compte Utilisateur</h2>
+    </div>
+    <div class="container-fluid content-area" style="margin-bottom: 30px;">
+        <div class="for-flashes">
+            {% for message in app.flashes('notice-users') %}
+                <div class="flash-notice mb-3 text-bold text-dark">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <p class="text-muted text-center">Les champs avec <span>*</span> sont obligatoires !</p>
+        {{ include('user/_form.html.twig') }}
+        <a href="{{ path('app_user_index') }}" class="btn btn-secondary btn-sm">
+            <i class="bi bi-backspace-fill"></i>
+            Retourner à la liste
+        </a>
+    </div>
+{% endblock %}

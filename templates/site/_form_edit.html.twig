@@ -1,0 +1,37 @@
+{{ form_start(form) }}
+    <h3 class="text-muted">Informations Générales</h3>
+    <div class="row">
+        {{ form_row(form.client) }}
+        {{ form_row(form.nom) }}
+        {{ form_row(form.nombre_bennes) }}
+        {{ form_row(form.quartier) }}
+        {{ form_row(form.adresse) }}
+        {{ form_row(form.ville) }}
+        {{ form_row(form.code_postal) }}
+        {{ form_row(form.pays) }}
+    </div>
+    <hr/>
+    <h3 class="text-muted">Contrat</h3>
+    <div class="row">
+        {% for form_element in form.contrat %}
+            <div class="mb-3 row-form form-check col-md-12">
+                {{ form_label(form_element, null, {'label_attr': {'class': 'contrat-form-element form-check-label'}}) }}
+                {{ form_errors(form_element, {'attr': {'class': 'form-error form-check-error'}}) }}
+                {{ form_widget(form_element, {'attr': {'class': 'form-check-input'}}) }}
+                <small>{{ form_help(form_element) }}</small>
+            </div>
+        {% else %}
+            <div class="col-md-3">
+                <p>Aucunes données trouvées.</p>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-success btn-sm">
+                <i class="bi bi-save-fill"></i>
+                {{ button_label|default('Sauvegarder') }}
+            </button>
+        </div>
+    </div>
+{{ form_end(form) }}

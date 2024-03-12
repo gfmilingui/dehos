@@ -1,0 +1,26 @@
+{{ form_start(form) }}
+    <div class="row">
+        {{ form_row(form.clientCategorie) }}
+        {{ form_row(form.nom) }}
+        {{ form_row(form.raison_sociale) }}
+        {{ form_row(form.numero_identification_sociale) }}
+        {{ form_row(form.nombre_lits) }}
+        {{ form_row(form.num_tel) }}
+        {{ form_row(form.fax) }}
+        {{ form_row(form.quartier) }}
+        {{ form_row(form.adresse) }}
+        {{ form_row(form.ville) }}
+        {{ form_row(form.code_postal) }}
+        {{ form_row(form.pays) }}
+        {{ form_row(form.site_web) }}
+        {{ form_row(form.internet) }}
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-success btn-sm">
+                <i class="bi bi-save-fill"></i>
+                {{ button_label|default('Sauvegarder') }}
+            </button>
+        </div>
+    </div>
+{{ form_end(form) }}

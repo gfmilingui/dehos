@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Demandes{% endblock %}
+
+{% block body %}
+    <div class="container-fluid title-area" style="margin-bottom: 10px;">
+        <h2 class="display-1 text-center">Liste des Demandes</h2>
+    </div>
+    <div class="container-fluid content-area table-responsive" style="margin-bottom: 30px;">
+        <div class="for-flashes">
+            {% for message in app.flashes('notice-demandes') %}
+                <div class="bg-warning flash-notice mb-3 text-bold text-dark">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('success-demandes') %}
+                <div class="bg-success flash-success mb-3 text-bold text-white">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <table class="table table-hover table-sm" id="tableIndexView">
+            <thead>
+                <tr>
+                    <th>Créée le</th>
+                    <th>Client</th>
+                    <th>Site</th>
+                    <th>Nombre bennes</th>
+                    <th>Date</th>
+                    <th>Statut</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for demande in demandes %}
+                <tr>
+                    <td>{{ demande.createdAt ? demande.createdAt|date('d-m-Y H:i:s') : '' }}</td>
+                    <td>{{ demande.getClient.nom }}</td>
+                    <td>{{ demande.getSite.nom }}</td>
+                    <td>{{ demande.nombreBennes }}</td>
+                    <td>{{ demande.date ? demande.date|date('d-m-Y') : '' }}</td>
+                    <td>{{ demande.statut }}</td>
+                    <td>
+                        <a href="{{ path('app_demande_show', {'id': demande.id}) }}"><i class="bi bi-eye-fill" style="color: #6c757d;"></i></a>
+                        {% if (demande.statut == "Affecter") %}
+                            <a href="{{ path('app_demande_edit', {'id': demande.id}) }}"><i class="bi bi-pencil-square" style="color: #6c757d;"></i></a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9">Aucunes données trouvées</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_demande_new') }}" class="btn btn-info btn-sm">
+            <i class="bi bi-plus-circle" style="color: #fff;"></i>
+            Ajouter
+        </a>
+        <a href="#" class="btn btn-secondary btn-sm">
+            <i class="bi bi-printer-fill"></i>
+            Imprimer
+        </a>
+    </div>
+{% endblock %}
